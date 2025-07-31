@@ -6,11 +6,17 @@ const Navigation = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: "/", label: "Forward" },
+    { path: "/forward", label: "Forward" },
     { path: "/background", label: "Event Background" },
     { path: "/objectives", label: "Objectives" },
     { path: "/description", label: "Description" },
     { path: "/activities", label: "Activities" },
+    { path: "/sponsoring", label: "Sponsoring" },
+    { path: "/why-partner", label: "Why Partner" },
+    { path: "/packages", label: "Packages" },
+    { path: "/rundown", label: "Event Rundown" },
+    { path: "/budgeting", label: "Budgeting" },
+    { path: "/make-your-mark", label: "Make Your Mark" },
   ];
 
   const authItems = [
