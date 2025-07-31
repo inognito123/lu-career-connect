@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Forward from "./pages/Forward";
 import EventBackground from "./pages/EventBackground";
@@ -24,28 +26,30 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/forward" element={<Forward />} />
-          <Route path="/background" element={<EventBackground />} />
-          <Route path="/objectives" element={<Objectives />} />
-          <Route path="/description" element={<Description />} />
-          <Route path="/activities" element={<Activities />} />
-          <Route path="/sponsoring" element={<Sponsoring />} />
-          <Route path="/why-partner" element={<WhyPartnerWithUs />} />
-          <Route path="/packages" element={<SponsoringPackages />} />
-          <Route path="/rundown" element={<EventRunDown />} />
-          <Route path="/budgeting" element={<Budgeting />} />
-          <Route path="/make-your-mark" element={<MakeYourMark />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forward" element={<ProtectedRoute><Forward /></ProtectedRoute>} />
+            <Route path="/background" element={<ProtectedRoute><EventBackground /></ProtectedRoute>} />
+            <Route path="/objectives" element={<ProtectedRoute><Objectives /></ProtectedRoute>} />
+            <Route path="/description" element={<ProtectedRoute><Description /></ProtectedRoute>} />
+            <Route path="/activities" element={<ProtectedRoute><Activities /></ProtectedRoute>} />
+            <Route path="/sponsoring" element={<ProtectedRoute><Sponsoring /></ProtectedRoute>} />
+            <Route path="/why-partner" element={<ProtectedRoute><WhyPartnerWithUs /></ProtectedRoute>} />
+            <Route path="/packages" element={<ProtectedRoute><SponsoringPackages /></ProtectedRoute>} />
+            <Route path="/rundown" element={<ProtectedRoute><EventRunDown /></ProtectedRoute>} />
+            <Route path="/budgeting" element={<ProtectedRoute><Budgeting /></ProtectedRoute>} />
+            <Route path="/make-your-mark" element={<ProtectedRoute><MakeYourMark /></ProtectedRoute>} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -1,9 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import { LogOut } from "lucide-react";
 import luLogo from "@/assets/lu-logo.png";
 
 const Navigation = () => {
   const location = useLocation();
+  const { signOut, user } = useAuth();
 
   const navItems = [
     { path: "/forward", label: "Forward" },
@@ -57,16 +60,27 @@ const Navigation = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-2">
-            {authItems.map((item) => (
-              <Link key={item.path} to={item.path}>
-                <Button
-                  variant="outline"
-                  className="border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all duration-300"
-                >
-                  {item.label}
-                </Button>
-              </Link>
-            ))}
+            {user ? (
+              <Button
+                variant="outline"
+                onClick={() => signOut()}
+                className="border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all duration-300"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
+            ) : (
+              authItems.map((item) => (
+                <Link key={item.path} to={item.path}>
+                  <Button
+                    variant="outline"
+                    className="border-white/30 text-white hover:bg-white/20 hover:border-white/50 transition-all duration-300"
+                  >
+                    {item.label}
+                  </Button>
+                </Link>
+              ))
+            )}
           </div>
         </div>
       </div>
